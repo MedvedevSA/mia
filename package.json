@@ -1,0 +1,26 @@
+{
+  "name": "mia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "build": "tailwindcss -i ./templates/style.css -o ./static/css/style.css --minify",
+    "dev": "tailwindcss -i ./templates/style.css -o ./static/css/style.css --watch"
+
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MedvedevSA/mia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MedvedevSA/mia/issues"
+  },
+  "homepage": "https://github.com/MedvedevSA/mia#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}

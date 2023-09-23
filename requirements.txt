@@ -2,3 +2,6 @@ asyncpg==0.28.0
 fastapi==0.100.1
 pydantic==2.1.1
 pydantic-settings==2.0.2
+
+sqlaclhemy
+jinja2

@@ -1,0 +1,32 @@
+<form hx-post="/customer" hx-target="#new_customer" class="w-full md:w-1/2">
+  <div class="flex flex-wrap">
+    <label class="w-full md:w-1/2 p-2">
+      <p class="text-sm">Телефон</p>
+      <input
+        name="phone"
+        class="w-full"
+        x-data
+        x-mask="+7 (999) 999-99-99"
+        placeholder="+7 (999) 000-00-00"
+      />
+    </label>
+
+    <div class="w-full md:w-1/2 p-2">
+      <p class="text-sm">Имя</p>
+      <input name="name" class="w-full" />
+    </div>
+
+    <div class="w-full flex">
+      <label class="grow flex p-2 flex-col">
+        <p class="text-sm pr-8">Комментарий</p>
+        <textarea name="comment" class="p-2 basis-full max-h-16">
+        </textarea>
+      </label>
+
+      <button type="submit" class="grow text-xl bg-slate-300 hover:bg-slate-400 rounded-md m-8">
+        <i class="fa-solid fa-check"></i>
+      </button>
+    </div>
+    <div id="new_customer">
+  </div>
+</form>

@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #222;
+}
+input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #222;
+}
+
+@layer components {
+    .input {
+      @apply p-2 rounded-sm shadow-md ring-1 ring-slate-200 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-50 focus:ring-opacity-75;
+    }
+    .lbl-input {
+      @apply input;
+    }
+}
+

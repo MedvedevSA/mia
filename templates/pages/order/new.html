@@ -1,0 +1,7 @@
+{% extends "base.html" %} {% block content %}
+
+<form hx-post="/order" class="w-full md:w-1/2">
+    {% include '/components/order/new.html' %}
+</form>
+
+{% endblock %}

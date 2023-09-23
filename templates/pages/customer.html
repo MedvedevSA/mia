@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block content %}
+    <div class="flex flex-col justify-items-end">
+        <div>
+            {% include '/components/customer/new.html' %}
+        </div>
+
+
+        <table class="w-3/4">
+            <h3 class="text-2xl py-4">
+                Клиенты:
+            </h3>
+            <thead>
+                <tr>
+                    <th scope="col" class="text-left">
+                        Имя
+                    </th>
+                    <th scope="col" class="text-left">
+                        Телефон
+                    </th>
+                    <th scope="col" class="text-left">
+                        Комментарий
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for customer in customers %}
+                <tr>
+                    <td scope="row">
+                        {{ customer.name }}
+                    </td>
+                    <td>
+                        {{ customer.phone }}
+                    </td>
+                    <td>
+                        {{ customer.comment }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

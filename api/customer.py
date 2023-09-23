@@ -27,7 +27,7 @@ async def add_customer(
 
 
 @r.get(BASE)
-async def get_categories(
+async def get_customers(
     customer_srvc: ServiceDepends
 ) -> list[BaseCustomer]:
     return await customer_srvc.get_all(response_model=BaseCustomer)

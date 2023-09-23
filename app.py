@@ -1,19 +1,30 @@
+from pathlib import Path
+
 import uvicorn
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 
 from config import settings
 from database import init_db
-from utils.utils import include_api_routes, import_db_models
+from utils.utils import include_routes, import_db_models
 
 app = FastAPI()
-include_api_routes(app)
+
+include_routes(app, Path('./api'), prefix='/api')
+include_routes(app, Path('./pages'))
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+@app.get("/")
+async def redirect_typer():
+    return RedirectResponse("/customer")
 
 
 @app.on_event('startup')
 async def startup_event():
     import_db_models()
     # await init_db()
-    return
 
 if __name__ == '__main__':
     uvicorn.run(

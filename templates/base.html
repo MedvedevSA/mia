@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <script
+      src="https://unpkg.com/htmx.org@1.9.5"
+      integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
+      crossorigin="anonymous">
+    </script>
+
+    <script src={{ url_for('static', path="js/script.js") }}></script>
+
+    <link href={{ url_for('static', path="vend/fa/css/all.css") }} rel="stylesheet">
+    <link rel="stylesheet" href={{ url_for('static', path="css/style.css") }}>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="w-full h-screen flex flex-col bg-orange-50">
+      {% include 'nav.html' %}
+
+      <div class="flex flex-grow justify-center">
+        <div class="w-[98%] md:w-3/4 shadow-md bg-stone-50 p-4 ">
+          {% block content%}{% endblock %}
+        </div>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<div x-data="{ width: window.screen.width }" class="w-full justify-items-center justify-between bg-cyan-300">
+    <template x-if="width >= 600">
+        <div class="p-2 w-full flex justify-between ">
+            <div>
+                <a  class="basis p-2 hover:bg-fuchsia-300 rounded-md" 
+                    href={{ url_for( 'customers_page' ) }}
+                >
+                    Клиенты
+                </a>
+                <a  class="basis p-2 hover:bg-fuchsia-300 rounded-md" 
+                    href={{ url_for( 'orders_page' ) }}
+                >
+                    Заказы
+                </a>
+
+            </div>
+                <div class="p-2 flex flex-row">
+                    <p class="text-sm text-stone-600 pr-4">Поиск</p>
+                    <input name="name" />
+                </div>
+        </div>
+    </template>
+
+    <template x-if="width < 600">
+        <div 
+            x-data="{ barOpen: false }"
+            class="basis-full flex justify-end  " 
+        >
+            <button 
+                x-on:click="barOpen = !barOpen"
+                class="text-xl p-2"
+            > 
+                mia
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div x-show="barOpen" class="absolute w-3/4 h-screen right-0 shadow-2xl bg-orange-50">
+                    <button 
+                        x-on:click="barOpen = !barOpen"
+                        class="text-xl bg-fuchsia-300 w-full p-2 grow text-right"
+                    > 
+                        mia
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="pl-8 p-2 m-6 text-2xl underline decoration-pink-500 underline-offset-8">
+                        Клиенты
+                    </div>
+                    <div class="pl-8 p-2 m-6 text-2xl underline decoration-pink-500 underline-offset-8">
+                        Таблица
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
