@@ -1,0 +1,62 @@
+<form
+  hx-post="/customer/select"
+  hx-target="#select-customer"
+>
+  <div class="relative">
+    <input
+      class="absolute invisible"
+      x-model="selected.id"
+      name="customer_id"
+    />
+    <div class="flex">
+      <input
+        @input.debounce="searchCustomers()"
+        @click="open = true"
+        x-model="selected.phone"
+        x-on:input.change="resetSelected()"
+        x-mask:dynamic="selectMask"
+        class="w-full"
+        name="phone"
+        type="text"
+        autocomplete="off"
+        @keyup.escape="selected.phone = ''; selected.id = null; open = false"
+      />
+      <a
+        x-show="!selected.id"
+        class="bg-cyan-100 shadow-md ring-1 rounded-full w-fit h-fit hover:bg-fuchsia-300 px-2 mx-2"
+        @click="selected.phone = ''"
+      >
+        <i class="fa-solid fa-remove"></i>
+      </a>
+      <p
+        x-show="selected.id"
+        class="shadow-md rounded-full w-fit h-fit px-2 mx-2"
+      >
+        <i class="fa-solid fa-check"></i>
+      </p>
+    </div>
+    <div
+      x-show="openDropdown"
+      @click.outside="open = false"
+      class="p-1 rounded-sm backdrop-blur-sm bg-cyan-100/30 w-full mt-1 absolute flex flex-col text-md ring-1 ring-slate-200"
+    >
+      <template x-for="customer in customers">
+        <div class="text-sm">
+          <a
+            class="flex rounded-md flex-col w-full hover:bg-cyan-300/30 border-b-2 border-b-cyan-100 p-1"
+            x-on:click="selected = customer; options = []; open = false"
+          >
+            <div class="w-full flex flex-wrap items-end">
+              <label class="px-2">Тел:</label>
+              <p x-text="customer.phone"></p>
+            </div>
+            <div class="w-full flex items-end">
+              <label class="px-2">Имя:</label>
+              <p x-text="customer.name" class="truncate ..."></p>
+            </div>
+          </a>
+        </div>
+      </template>
+    </div>
+  </div>
+</form>

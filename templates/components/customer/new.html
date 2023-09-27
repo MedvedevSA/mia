@@ -1,4 +1,4 @@
-<form hx-post="/customer" hx-target="#new_customer" class="w-full md:w-1/2">
+<form hx-post="/customer" hx-target="#customer-new" class="w-full md:w-1/2">
   <div class="flex flex-wrap">
     <label class="w-full md:w-1/2 p-2">
       <p class="text-sm">Телефон</p>
@@ -19,14 +19,15 @@
     <div class="w-full flex">
       <label class="grow flex p-2 flex-col">
         <p class="text-sm pr-8">Комментарий</p>
-        <textarea name="comment" class="p-2 basis-full max-h-16">
-        </textarea>
+        <textarea name="comment" class="p-2 basis-full max-h-16"> </textarea>
       </label>
 
-      <button type="submit" class="grow text-xl bg-slate-300 hover:bg-slate-400 rounded-md m-8">
+      <button
+        type="submit"
+        class="grow text-xl bg-slate-300 hover:bg-slate-400 rounded-md m-8"
+      >
         <i class="fa-solid fa-check"></i>
       </button>
     </div>
-    <div id="new_customer">
   </div>
 </form>

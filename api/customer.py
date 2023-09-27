@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from repositories import CustomerRepository
-from schemas.customer import AddCustomer, UpdateCustomer, BaseCustomer
+from schemas.customer import AddCustomer, UpdateCustomer, BaseCustomer, CustomerFiler
 from services import BaseService
 from utils.utils import module_url
 
@@ -28,9 +28,12 @@ async def add_customer(
 
 @r.get(BASE)
 async def get_customers(
+    filter: Annotated[CustomerFiler, Depends()],
     customer_srvc: ServiceDepends
 ) -> list[BaseCustomer]:
-    return await customer_srvc.get_all(response_model=BaseCustomer)
+    return await customer_srvc.get_all(
+        params=filter, response_model=BaseCustomer
+    )
 
 
 @r.get(BASE + '/{id}')

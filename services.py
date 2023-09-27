@@ -14,7 +14,7 @@ class BaseService:
 
     async def add_one(self, obj: Model) -> int:
         return await self.repository.add_one(
-            obj.model_dump(exclude_unset=True)
+            obj.model_dump()
         )
 
     async def get_one(

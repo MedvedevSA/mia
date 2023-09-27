@@ -1,0 +1,47 @@
+<form
+  x-data="customerSelect"
+>
+  <div class="flex flex-wrap items-end p-2">
+    <div class="p-2 flex flex-col md:w-64 w-full">
+      <p>Телефон</p>
+      <div class="">
+        {% if customer %}
+          {{customer.phone}}</p>
+        {% else %}
+          {% include '/components/customer/select.html' %}
+          <script src={{ url_for('static', path="js/customerSelect.js") }}></script>
+        {% endif %}
+      </div>
+    </div>
+    <div class="p-2 w-full md:w-64">
+      <p class="text-sm">Имя</p>
+      {% if customer %}
+        <p>{{customer.name}}</p>
+      {% else %}
+        <input x-model="selected.name" autocomplete="off" name="name" class="w-full" />
+      {% endif %}
+    </div>
+    <div class="p-2">
+      {% if customer %}
+        <div
+          hx-get="/customer/select_form"
+          hx-target="#select_form"
+          class="bg-cyan-100 shadow-md ring-1 rounded-full w-fit h-fit hover:bg-fuchsia-300 px-2 mx-2"
+        >
+          <i class="fa-solid fa-remove"></i>
+        </div>
+      {% else %}
+        <div
+          x-show="isValid"
+          hx-post="/customer"
+          hx-vals='{"context": "select_form"}'
+          hx-target="#select_form"
+          class="bg-cyan-100 shadow-md ring-1 rounded-full w-fit h-fit hover:bg-fuchsia-300 px-2 mx-2"
+        >
+          <i class="fa-solid fa-add"></i>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</form>
