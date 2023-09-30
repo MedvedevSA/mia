@@ -1,32 +1,114 @@
 {% extends "base.html" %} {% block content %}
 
-<form id="customer" 
-      hx-post="/customer"
-      hx-vals='{"context": "select_form"}'
-      hx-target="#customer_select_form"
+<form
+  id="customer"
+  hx-post="/customer"
+  hx-vals='{"context": "select_form"}'
+  hx-target="#customer_select_form"
 ></form>
 
-<form class="flex flex-col">
-  <div 
-    id="customer_select_form"
-    x-data="customerSelect"
-  >
-    {% include '/components/customer/select_form.html' %}
-  </div>
+<div class="flex justify-center bg-white">
+  <div class="w-full md:w-3/4">
+    <form class="flex flex-col justify-center">
+      <div class="flex flex-wrap w-full">
+        <div id="customer_select_form" x-data="customerSelect">
+          {% include '/components/customer/select_form.html' %}
+        </div>
 
-  <div class="flex flex-wrap p-2">
-    {% include '/components/order/due_date.html' %}
+        {% include '/components/order/due_date.html' %}
+      </div>
+
+      <div
+        class="my-2 w-full bg-slate-100 rounded-md border-2 border-slate-100"
+        x-data="addOrderItems"
+      >
+        <div class="p-2 flex">
+          <p class="text-xl">Задачи</p>
+          <p
+            class="bg-primary shadow-md rounded-sm w-fit hover:bg-secondary px-2 mx-4 cursor-pointer"
+            @click="orderItems.push(defaultItem())"
+          >
+            <i class="fa-solid fa-add"></i>
+          </p>
+        </div>
+        <template x-for="(item, idx) in orderItems">
+          <div
+            class="p-2 bg-white border-spacing-3 border-2 border-slate-300 rounded-sm flex flex-wrap w-full md:w-3/4"
+          >
+            <div class="w-full">
+
+              <div class="flex justify-between mb-4">
+                <p 
+                  x-text="'📌 ' + (idx+1)"
+                  class="underline decoration-secondary underline-offset-8 font-bold text-xl"
+                ></p>
+                <a
+                  class="bg-primary shadow-md rounded-sm w-fit hover:bg-secondary px-2 py-1 cursor-pointer"
+                  @click="orderItems.splice(idx, 1)"
+                >
+                  <i class="fa-solid fa-remove"></i>
+                </a>
+              </div>
+
+              <div class="flex flex-wrap">
+                <div class="w-full md:w-3/4 h-30 border-2  border-slate-300 rounded-sm">
+                    <textarea
+                    placeholder="Задача"
+                    type="text"
+                    x-model="item.description"
+                    :name="()=> 'order_details' + idx + '__description'"
+                    class="w-full h-full resize-none bg-white shadow-inner "
+                    ></textarea>
+                </div>
+
+                <div class="w-full md:w-1/4 md:px-2">
+                  <p class="">Стоимость</p>
+                  <div
+                    class="border-2 border-slate-300 bg-white rounded-sm w-24"
+                  >
+                    <input
+                      :name="()=> 'order_details' + idx + '__cost'"
+                      x-model="item.cost"
+                      x-mask="999999"
+                      class="w-full p-2 text-right"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <p class="text-md p-2" x-text="sumCost"></p>
+      </div>
+      <script>
+        document.addEventListener("alpine:init", () => {
+          Alpine.data("addOrderItems", () => ({
+            orderItems: [{ cost: 0, description: "" }],
+            defaultItem() {
+              return { cost: 0, description: "" };
+            },
+
+            get sumCost() {
+              let sum = 0;
+              for (const item of this.orderItems) {
+                sum += Number(item.cost);
+              }
+              return "Итого: " + sum;
+            },
+          }));
+        });
+      </script>
+      <div class="p-4">
+        <button
+          hx-post="/order"
+          hx-swap="outerHTML"
+          class="p-4 rounded-md bg-secondary"
+        >
+          Сохранить
+        </button>
+      </div>
+    </form>
   </div>
-  
-  <div class="p-4">
-    <button
-      hx-post="/order"
-      hx-swap="outerHTML"
-      class="p-4 rounded-md bg-secondary"
-    >
-      Сохранить
-    </button>
-  </div>
-</form>
+</div>
 
 {% endblock %}

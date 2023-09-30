@@ -1,27 +1,28 @@
 <div
   x-data="datePicker"
-  class="p-2 relative w-full md:w-64"
+  class="relative w-full md:w-64 p-2"
   @click.outside="open = false"
 >
   <p class="mb-2">Дата сдачи</p>
   <div class="flex">
     <a
       @click="offsetMonth(-1)"
-      class="mx-2 bg-primary hover:bg-secondary rounded-sm shadow-sm w-1/6 text-center"
+      class="mr-2 bg-primary hover:bg-secondary rounded-sm shadow-sm w-1/6 text-center"
     >
       <i class="fa-solid fa-angle-left"></i>
     </a>
-    <input
-      type="datetime"
-      @click="open = true"
-      class="w-2/3"
-      x-model="selectedDate"
-      x-mask="99/99/9999"
-      name="due_date"
-    />
+    <div class="w-2/3 border-b-2">
+      <input
+        type="datetime"
+        @click="open = true"
+        x-model="selectedDate"
+        x-mask="99/99/9999"
+        name="due_date"
+      />
+    </div>
     <a
       @click="offsetMonth(+1)"
-      class="mx-2 bg-primary hover:bg-secondary rounded-sm shadow-sm w-1/6 text-center"
+      class="ml-2 bg-primary hover:bg-secondary rounded-sm shadow-sm w-1/6 text-center"
     >
       <i class="fa-solid fa-angle-right"></i>
     </a>

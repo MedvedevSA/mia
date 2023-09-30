@@ -21,10 +21,10 @@ def convert_qs(body: dict) -> dict:
                 current[name] = current.get(name, {})
                 current = current[name]
 
-        list_keys = [fld for fld in converted.keys() if fld[-1].isdigit()]
-        for key in list_keys:
-            parent_schema = key[:-1]
-            if parent_schema not in converted:
-                converted[parent_schema] = list()
-            converted[key[:-1]].append(converted.pop(key))
+    list_keys = [fld for fld in converted.keys() if fld[-1].isdigit()]
+    for key in list_keys:
+        parent_schema = key[:-1]
+        if parent_schema not in converted:
+            converted[parent_schema] = list()
+        converted[key[:-1]].append(converted.pop(key))
     return converted

@@ -2,16 +2,18 @@ import logging
 from typing import Callable, TypeVar, Any
 
 from sqlalchemy import (
-    insert, select, update, delete, cast,
+    insert, select, update, delete, cast, text,
     String, Select, BinaryExpression
 )
 from sqlalchemy.orm import InstrumentedAttribute, DeclarativeBase
 from sqlalchemy.sql.elements import UnaryExpression
 from sqlalchemy.inspection import inspect
+from sqlalchemy.dialects import postgresql
 
 from database import async_session, Base
 from models.customer import Customer
 from models.order import Order
+from models.order_detail import OrderDetail
 from utils.config_dict import AnnotateJoin
 from utils.paging import PagingModel
 from utils.sorting import SortOrderParam, SortOrder
@@ -240,3 +242,40 @@ class CustomerRepository(SQLAlchemyRepository):
 
 class OrderRepository(SQLAlchemyRepository):
     model = Order
+
+    async def add_one(self, data: dict):
+        def order_details_values(order_detail: dict, args: dict, idx: int) -> str:
+            descr_key = "descr" + str(idx)
+            cost_key = "cost" + str(idx)
+            args[descr_key] = order_detail["description"]
+            args[cost_key] = order_detail["cost"]
+            return f'((select id from new_order), :{descr_key}, :{cost_key})'
+
+        args = dict(
+            customer_id=data["customer_id"],
+            due_date=data["due_date"],
+        )
+        values = [
+            order_details_values(order_detail, args, idx)
+            for idx, order_detail
+            in enumerate(data["order_details"])
+        ]
+        insert_order_with_details = f"""
+            WITH new_order AS (
+                INSERT INTO "order"
+                (customer_id, due_date, "comment")
+                VALUES(:customer_id, :due_date, '') RETURNING "order".id
+            )
+            INSERT INTO order_detail (order_id, description, "cost")
+            VALUES {', '.join(values)}
+            RETURNING (select id from new_order)
+        """
+        async with async_session() as session:
+            res = (await session.execute(text(insert_order_with_details), args)).scalar()
+            await session.commit()
+
+        return res
+
+
+class OrderDetailRepository(SQLAlchemyRepository):
+    model = OrderDetail

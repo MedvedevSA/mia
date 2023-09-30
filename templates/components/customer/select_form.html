@@ -1,20 +1,21 @@
-<div class="flex flex-wrap items-end p-2">
-  <div class="p-2 flex flex-col md:w-64 w-full">
+<div class="p-2 flex flex-wrap">
+  <div class="p-2 sm:w-64 w-full">
     <p>Телефон</p>
-    <div class="">
-        {% include '/components/customer/select.html' %}
-    </div>
+    {% include '/components/customer/select.html' %}
   </div>
-  <div class="p-2 w-full md:w-64">
+  <div class="p-2 sm:w-64 w-full">
     <p class="text-sm">Имя</p>
-      <input 
-        x-model="selected.name"
-        form="customer"
-        {% if customer %} disabled {% endif %}
-        autocomplete="off"
-        name="name"
-        class="w-full"
-        />
+      <div
+        class="w-full border-b-2"
+      >
+        <input 
+          x-model="selected.name"
+          form="customer"
+          {% if customer %} disabled {% endif %}
+          autocomplete="off"
+          name="name"
+          />
+      </div>
   </div>
   <div class="p-2 flex">
   {% if customer %}
@@ -27,7 +28,7 @@
     <div
       hx-get="/customer/select_form"
       hx-target="#customer_select_form"
-      class="bg-cyan-200 shadow-md rounded-sm w-fit h-fit hover:bg-fuchsia-300 px-2 mx-2"
+      class="bg-primary hover:bg-secondary shadow-md rounded-sm w-fit h-fit px-2 mx-2"
     >
       <i class="fa-solid fa-remove relative"> 
         <input 
@@ -42,7 +43,7 @@
       type="submit"
       form="customer"
       x-show="isValid"
-      class="bg-cyan-300 shadow-md rounded-sm w-fit h-fit hover:bg-fuchsia-300 px-2 mx-2"
+      class="bg-primary hover:bg-secondary shadow-md rounded-sm w-fit h-fit px-2 mx-2"
     >
       <i class="fa-solid fa-add"></i>
     </button>

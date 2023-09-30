@@ -3,6 +3,7 @@ from datetime import datetime, date
 
 from pydantic import BaseModel, Field, BeforeValidator, ValidationError
 
+from schemas.order_detail import BaseOrderDetail
 from utils.paging import PagingModel
 
 
@@ -19,12 +20,12 @@ class AddOrder(BaseModel):
     customer_id: int = Field(ge=1)
     due_date: Annotated[date, BeforeValidator(convert_to_date)]
     comment: str = ''
+    order_details: list[BaseOrderDetail]
 
 
 class UpdOrder(AddOrder):
     completion_date: datetime | None
     passed: bool
-    ...
 
 
 class BaseOrder(UpdOrder):

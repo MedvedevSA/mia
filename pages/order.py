@@ -1,11 +1,11 @@
 from urllib.parse import parse_qs
 
 from typing import Annotated
-from fastapi import APIRouter, Request, Depends, Header, Body
+from fastapi import APIRouter, Request, Depends, Response
 from fastapi.templating import Jinja2Templates
 
 from api.order import ServiceDepends
-from schemas.order import BaseOrder, AddOrder
+from schemas.order import AddOrder
 from utils.qs import converted_qs
 
 r = APIRouter()
@@ -33,10 +33,6 @@ def orders_page(request: Request):
 async def post_order(
     order_srvc: ServiceDepends,
     body: Annotated[dict, Depends(converted_qs)],
-    request: Request,
 ):
-    await order_srvc.add_one(AddOrder.model_validate(body))
-    return templates.TemplateResponse(
-        'pages/order/index.html',
-        context=dict(request=request)
-    )
+    new_order_id = await order_srvc.add_one(AddOrder.model_validate(body))
+    return Response(headers={'HX-Redirect': f'/order/edit/{new_order_id}'})
