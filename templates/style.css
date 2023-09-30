@@ -10,7 +10,17 @@ textarea {
 input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid #222;
+  outline: none;
+}
+.bg-pattern{
+    background: linear-gradient(
+        rgba(255,255,255, 0) .9em, rgb(249,44,133, 0.2) 1em)
+      0 0,
+      linear-gradient(90deg,
+        rgba(255,255,255, 0) .9em, rgb(249,44,133, 0.2) 1em)
+      0 0;
+    background-size: 1em 1em;
+    background-color: #FDF5DF;
 }
 
 @layer components {
@@ -19,6 +29,27 @@ input {
     }
     .lbl-input {
       @apply input;
+    }
+    .bg-primary {
+      background: #5EBEC4;
+    }
+    .bg-primary {
+      background: #5EBEC4 ;
+    }
+    .bg-primary-opacity-70{
+      background: rgb(94,190,196, 0.7)
+    }
+    .text-secondary{
+      color: rgb(249,44,133);
+    }
+    .bg-secondary{
+      background: rgb(249,44,133);
+    }
+    .bg-secondary-opacity-50{
+      background: rgb(249,44,133, 0.5);
+    }
+    .decoration-secondary{
+      text-decoration: rgb(249,44,133);
     }
 }
 

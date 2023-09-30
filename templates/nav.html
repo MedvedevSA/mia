@@ -1,13 +1,13 @@
-<div x-data="{ width: window.screen.width }" class="w-full justify-items-center justify-between bg-cyan-300">
+<div x-data="{ width: window.screen.width }" class="w-full justify-items-center justify-between bg-primary">
     <template x-if="width >= 600">
         <div class="p-2 w-full flex justify-between ">
             <div>
-                <a  class="basis p-2 hover:bg-fuchsia-300 rounded-md" 
+                <a  class="basis p-2 hover:bg-secondary rounded-md" 
                     href={{ url_for( 'customers_page' ) }}
                 >
                     Клиенты
                 </a>
-                <a  class="basis p-2 hover:bg-fuchsia-300 rounded-md" 
+                <a  class="basis p-2 hover:bg-secondary rounded-md" 
                     href={{ url_for( 'orders_page' ) }}
                 >
                     Заказы
@@ -34,19 +34,28 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
 
-            <div x-show="barOpen" class="absolute w-3/4 h-screen right-0 shadow-2xl bg-orange-50">
+            <div x-show="barOpen" class="absolute w-3/4 h-screen right-0 shadow-2xl bg-pattern z-20">
                     <button 
                         x-on:click="barOpen = !barOpen"
-                        class="text-xl bg-fuchsia-300 w-full p-2 grow text-right"
+                        class="text-xl bg-secondary w-full p-2 grow text-right"
                     > 
                         mia
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                    <div class="pl-8 p-2 m-6 text-2xl underline decoration-pink-500 underline-offset-8">
-                        Клиенты
-                    </div>
-                    <div class="pl-8 p-2 m-6 text-2xl underline decoration-pink-500 underline-offset-8">
-                        Таблица
+                    <div class="flex flex-col">
+
+                        <a 
+                            class="pl-8 p-2 m-6 text-2xl underline decoration-secondary bg-orange-200 shadow-inner rounded-md underline-offset-8"
+                            href={{ url_for( 'customers_page' ) }}
+                        >
+                            Клиенты
+                        </a>
+                        <a 
+                            class="pl-8 p-2 m-6 text-2xl underline decoration-secondary bg-orange-200 shadow-inner rounded-md underline-offset-8"
+                            href={{ url_for( 'orders_page' ) }}
+                        >
+                            Заказы
+                        </a>
                     </div>
                 </div>
             </div>

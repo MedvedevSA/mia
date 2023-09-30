@@ -1,0 +1,65 @@
+<div
+  x-data="datePicker"
+  class="p-2 relative w-full md:w-64"
+  @click.outside="open = false"
+>
+  <p class="mb-2">Дата сдачи</p>
+  <div class="flex">
+    <a
+      @click="offsetMonth(-1)"
+      class="mx-2 bg-primary hover:bg-secondary rounded-sm shadow-sm w-1/6 text-center"
+    >
+      <i class="fa-solid fa-angle-left"></i>
+    </a>
+    <input
+      type="datetime"
+      @click="open = true"
+      class="w-2/3"
+      x-model="selectedDate"
+      x-mask="99/99/9999"
+      name="due_date"
+    />
+    <a
+      @click="offsetMonth(+1)"
+      class="mx-2 bg-primary hover:bg-secondary rounded-sm shadow-sm w-1/6 text-center"
+    >
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+  </div>
+  <div
+    x-show="open"
+    class="absolute px-4 pt-1 inset-x-0 "
+  >
+    <div class="p-1 shadow-md rounded-sm backdrop-blur-sm bg-slate-50/ bg-primary-opacity-70  mt-1 left-1/2 z-10 flex flex-col text-md ring-1 ring-slate-200">
+      <div>
+        <p class="text-center" x-text="showMonthYear">
+        </p>
+        <div class="flex w-full bg-secondary-opacity-50 rounded-md p-1">
+          <template x-for="(dayName, idx) in weekDays">
+            <div class="basis-full">
+              <div
+                x-text="dayName"
+                class="text-center"
+                :class='idx >= 5 ? "text-secondary": ""'
+              ></div>
+            </div>
+          </template>
+        </div>
+        <template x-for="row in curMonthWeeks()">
+          <div class="flex">
+            <template x-for="col in 7">
+              <a
+                x-text="cellDay(row, col)"
+                class="basis-full py-1 hover:bg-secondary hover:shadow-md rounded-md text-center cursor-pointer"
+                :class=' col > 5 ? "text-secondary hover:text-black": ""'
+                @click="datePick(row, col)"
+              >
+              </a>
+            </template>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>
+<script src={{ url_for('static', path="js/datePicker.js") }}></script>

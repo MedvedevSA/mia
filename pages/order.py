@@ -4,7 +4,8 @@ from typing import Annotated
 from fastapi import APIRouter, Request, Depends, Header, Body
 from fastapi.templating import Jinja2Templates
 
-from schemas.customer import BaseCustomer, AddCustomer
+from api.order import ServiceDepends
+from schemas.order import BaseOrder, AddOrder
 from utils.qs import converted_qs
 
 r = APIRouter()
@@ -22,6 +23,19 @@ def new_order_page(request: Request):
 
 @r.get('/order')
 def orders_page(request: Request):
+    return templates.TemplateResponse(
+        'pages/order/index.html',
+        context=dict(request=request)
+    )
+
+
+@r.post('/order')
+async def post_order(
+    order_srvc: ServiceDepends,
+    body: Annotated[dict, Depends(converted_qs)],
+    request: Request,
+):
+    await order_srvc.add_one(AddOrder.model_validate(body))
     return templates.TemplateResponse(
         'pages/order/index.html',
         context=dict(request=request)

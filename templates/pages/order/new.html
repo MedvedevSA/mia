@@ -1,9 +1,32 @@
 {% extends "base.html" %} {% block content %}
 
-<div>
-    <div id="select_form">
-        {% include '/components/customer/select_form.html' %}
-    </div>
-</div>
+<form id="customer" 
+      hx-post="/customer"
+      hx-vals='{"context": "select_form"}'
+      hx-target="#customer_select_form"
+></form>
+
+<form class="flex flex-col">
+  <div 
+    id="customer_select_form"
+    x-data="customerSelect"
+  >
+    {% include '/components/customer/select_form.html' %}
+  </div>
+
+  <div class="flex flex-wrap p-2">
+    {% include '/components/order/due_date.html' %}
+  </div>
+  
+  <div class="p-4">
+    <button
+      hx-post="/order"
+      hx-swap="outerHTML"
+      class="p-4 rounded-md bg-secondary"
+    >
+      Сохранить
+    </button>
+  </div>
+</form>
 
 {% endblock %}

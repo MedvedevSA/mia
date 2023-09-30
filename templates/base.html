@@ -19,7 +19,7 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="w-full h-screen flex flex-col bg-orange-50">
+    <div class="w-full h-screen flex flex-col bg-pattern">
       {% include 'nav.html' %}
 
       <div class="flex flex-grow justify-center">
@@ -27,6 +27,7 @@
           {% block content%}{% endblock %}
         </div>
 
+          <script src={{ url_for('static', path="js/customerSelect.js") }}></script>
           <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
           <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
       </div>

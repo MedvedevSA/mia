@@ -11,6 +11,7 @@ from sqlalchemy.inspection import inspect
 
 from database import async_session, Base
 from models.customer import Customer
+from models.order import Order
 from utils.config_dict import AnnotateJoin
 from utils.paging import PagingModel
 from utils.sorting import SortOrderParam, SortOrder
@@ -235,3 +236,7 @@ class SQLAlchemyRepository:
 
 class CustomerRepository(SQLAlchemyRepository):
     model = Customer
+
+
+class OrderRepository(SQLAlchemyRepository):
+    model = Order
