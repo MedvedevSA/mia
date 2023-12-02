@@ -2,7 +2,7 @@
 <div class="p-4">
   <a 
     class="p-2 bg-primary hover:bg-secondary rounded-md"
-    href={{ url_for( 'new_order_page' ) }}
+    href={{ url_for( 'tasks_create_page' ) }}
   >
     Создать 
   </a>
@@ -15,27 +15,27 @@
   <div class="p-2 w-full md:w-3/4">
     <p class="bg-white px-2">Задачи:</p>
 
-    {% for order in orders %}
+    {% for task in tasks %}
     <div class="my-2 p-2 bg-white border flex flex-wrap">
       <div class="w-full flex flex-row">
         <div class="p-1 flex flex-row w-3/12">
           <label>#</label>
-          <p>{{ order.id }}</p>
+          <p>{{ task.id }}</p>
         </div>
         <div class="p-1 flex flex-row w-3/12">
           <label>Срок сдачи:</label>
-          <p class="px-2">{{ order.due_date }}</p>
+          <p class="px-2">{{ task.due_date }}</p>
         </div>
         <div class="p-1 flex flex-row w-3/12">
           <label>Создан:</label>
-          <p>{{ order.time_created }}</p>
+          <p>{{ task.time_created }}</p>
         </div>
       </div>
 
-      {% for order_detail in order.order_details %}
+      {% for task_detail in task.task_details %}
       <div class="border">
-        <p>{{order_detail.description}}</p>
-        <p>{{order_detail.cost}}</p>
+        <p>{{task_detail.description}}</p>
+        <p>{{task_detail.cost}}</p>
       </div>
       {% endfor %}
 

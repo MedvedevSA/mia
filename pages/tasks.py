@@ -15,7 +15,7 @@ templates = Jinja2Templates(directory='templates')
 
 
 @r.get('/tasks/create')
-def new_task_page(request: Request):
+def tasks_create_page(request: Request):
     return templates.TemplateResponse(
         'forms/tasks/create.html',
         context=dict(request=request)
