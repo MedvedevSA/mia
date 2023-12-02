@@ -27,5 +27,5 @@ class BaseCustomer(UpdateCustomer):
     id: int
 
 
-class CustomerFiler(PagingModel):
+class CustomerFilter(PagingModel):
     phone__ilike: str | None = Field(default=None, alias='phone_ilike')

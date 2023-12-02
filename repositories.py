@@ -2,18 +2,16 @@ import logging
 from typing import Callable, TypeVar, Any
 
 from sqlalchemy import (
-    insert, select, update, delete, cast, text,
+    insert, select, update, delete, cast, text, func,
     String, Select, BinaryExpression
 )
 from sqlalchemy.orm import InstrumentedAttribute, DeclarativeBase
 from sqlalchemy.sql.elements import UnaryExpression
 from sqlalchemy.inspection import inspect
-from sqlalchemy.dialects import postgresql
 
 from database import async_session, Base
 from models.customer import Customer
-from models.order import Order
-from models.order_detail import OrderDetail
+from models.tasks import Task
 from utils.config_dict import AnnotateJoin
 from utils.paging import PagingModel
 from utils.sorting import SortOrderParam, SortOrder
@@ -240,8 +238,13 @@ class CustomerRepository(SQLAlchemyRepository):
     model = Customer
 
 
-class OrderRepository(SQLAlchemyRepository):
-    model = Order
+class TaskRepository(SQLAlchemyRepository):
+    model = Task
+
+    async def get_order_count(self):
+        stmt = select(func.count(Task.id))
+        async with async_session() as session:
+            return (await session.execute(stmt)).scalar()
 
     async def add_one(self, data: dict):
         def order_details_values(order_detail: dict, args: dict, idx: int) -> str:
@@ -276,6 +279,3 @@ class OrderRepository(SQLAlchemyRepository):
 
         return res
 
-
-class OrderDetailRepository(SQLAlchemyRepository):
-    model = OrderDetail

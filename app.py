@@ -18,13 +18,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def redirect_typer():
-    return RedirectResponse("/customer")
+    return RedirectResponse("/customers")
 
 
 @app.on_event('startup')
 async def startup_event():
     import_db_models()
-    # await init_db()
+    await init_db()
 
 if __name__ == '__main__':
     uvicorn.run(

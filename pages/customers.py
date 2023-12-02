@@ -1,9 +1,9 @@
 from typing import Annotated
-from fastapi import APIRouter, Request, Depends, Header, Body, Query
+from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 
-from api.customer import get_customers, service_depends, ServiceDepends
-from schemas.customer import BaseCustomer, AddCustomer, CustomerFiler
+from api.customer import get_customers, ServiceDepends, BASE
+from schemas.customer import BaseCustomer, AddCustomer
 from utils.qs import converted_qs
 
 r = APIRouter()
@@ -11,33 +11,33 @@ r = APIRouter()
 templates = Jinja2Templates(directory='templates')
 
 
-@r.get('/customer/new')
+@r.get(BASE + '/create')
 def get_customer_form(
     request: Request,
     context: str | None = None,
 ):
     return templates.TemplateResponse(
-        'components/customer/new.html',
+        'components/customers/create.html',
         context=dict(request=request, context=context)
     )
 
 
-@r.get('/customer')
+@r.get(BASE)
 def customers_page(
     request: Request,
     customers: Annotated[list[BaseCustomer], Depends(get_customers)],
 ):
     return templates.TemplateResponse(
-        'pages/customer.html',
+        'pages/customers.html',
         context=dict(request=request, customers=customers)
     )
 
 
-@r.get('/customer/select_form')
+@r.get(BASE + '/select_form')
 async def get_select_form(
     request: Request,
 ):
-    html = 'components/customer/select_form.html'
+    html = 'components/customers/select_form.html'
     return templates.TemplateResponse(
         html,
         context=dict(
@@ -46,16 +46,16 @@ async def get_select_form(
     )
 
 
-@r.post('/customer')
+@r.post(BASE)
 async def add_customer(
     request: Request,
     body: Annotated[dict, Depends(converted_qs)],
     customer_srvc: ServiceDepends,
 ):
     context: str = body.get('context')
-    html = 'components/customer/new.html'
+    html = 'components/customers/create.html'
     if context == 'select_form':
-        html = 'components/customer/select_form.html'
+        html = 'components/customers/select_form.html'
 
     id = await customer_srvc.add_one(
         AddCustomer.model_validate(body)

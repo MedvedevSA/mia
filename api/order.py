@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from repositories import OrderRepository
-from schemas.order import AddOrder, UpdOrder, BaseOrder
+from repositories import TaskRepository
+from schemas.task import BaseTask, UpdTask, TaskSchema
 from services import BaseService
 from utils.utils import module_url
 
@@ -12,7 +12,7 @@ BASE = module_url(__name__)
 
 
 def service_depends():
-    return BaseService(OrderRepository)
+    return BaseService(TaskRepository)
 
 
 ServiceDepends = Annotated[BaseService, Depends(service_depends)]
@@ -20,7 +20,7 @@ ServiceDepends = Annotated[BaseService, Depends(service_depends)]
 
 @r.post(BASE)
 async def add_order(
-    order: AddOrder,
+    order: BaseTask,
     order_srvc: ServiceDepends
 ) -> int | None:
     return await order_srvc.add_one(order)
@@ -29,22 +29,22 @@ async def add_order(
 @r.get(BASE)
 async def get_orders(
     order_srvc: ServiceDepends
-) -> list[BaseOrder]:
-    return await order_srvc.get_all(response_model=BaseOrder)
+) -> list[TaskSchema]:
+    return await order_srvc.get_all(response_model=TaskSchema)
 
 
 @r.get(BASE + '/{id}')
 async def get_order(
     id: int,
     order_srvc: ServiceDepends
-) -> BaseOrder | None:
-    return await order_srvc.get_one(id, response_model=BaseOrder)
+) -> TaskSchema | None:
+    return await order_srvc.get_one(id, response_model=TaskSchema)
 
 
 @r.put(BASE + '/{id}')
 async def update_order(
     id: int,
-    upd_order: UpdOrder,
+    upd_order: UpdTask,
     order_srvc: ServiceDepends
 ) -> int | None:
     return await order_srvc.update_one(id, upd_order)

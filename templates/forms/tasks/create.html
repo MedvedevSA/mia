@@ -1,10 +1,11 @@
-{% extends "/forms/order/base.html" %} {% block customer %}
+{% extends "/forms/tasks/base.html" %} {% block customer %}
+
 <div id="customer_select_form" x-data="customerSelect">
-  {% include '/components/customer/select_form.html' %}
+  {% include '/components/customers/select_form.html' %}
 </div>
 
 {% endblock %} {% block order %}
-    {% include '/components/order/due_date.html' %}
+    {% include '/components/tasks/due_date.html' %}
 
 {% endblock %} {% block order_details %}
 <div
@@ -103,7 +104,7 @@
 </script>
 <div class="p-4">
   <button
-    hx-post="/order"
+    hx-post="/tasks"
     hx-swap="outerHTML"
     class="p-4 rounded-md bg-secondary"
   >
