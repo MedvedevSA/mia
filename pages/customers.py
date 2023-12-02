@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 
-from api.customer import get_customers, ServiceDepends, BASE
+from api.customers import get_customers, ServiceDepends, BASE
 from schemas.customer import BaseCustomer, AddCustomer
 from utils.qs import converted_qs
 

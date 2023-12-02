@@ -27,7 +27,7 @@
         let param = new URLSearchParams();
         param.append("phone_ilike", this.selected.phone);
 
-        fetch("/api/customer?" + param.toString()).then((response) =>
+        fetch("/api/customers?" + param.toString()).then((response) =>
           response.json().then((data) => {
             this.customers = data;
           })

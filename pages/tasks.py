@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Request, Depends, Response
 from fastapi.templating import Jinja2Templates
 
-from api.order import ServiceDepends
+from api.tasks import ServiceDepends
 from schemas.task import BaseTask, TasksTable, TaskFilter
 from utils.qs import converted_qs
 
@@ -15,7 +15,7 @@ templates = Jinja2Templates(directory='templates')
 
 
 @r.get('/tasks/create')
-def new_order_page(request: Request):
+def new_task_page(request: Request):
     return templates.TemplateResponse(
         'forms/tasks/create.html',
         context=dict(request=request)
@@ -24,27 +24,27 @@ def new_order_page(request: Request):
 
 @r.get('/tasks')
 async def tasks_page(
-    order_srvc: ServiceDepends,
+    task_srvc: ServiceDepends,
     request: Request,
     filter: Annotated[TaskFilter, Depends()],
 ):
-    orders = await order_srvc.get_all(params=filter, response_model=TasksTable)
-    pages_count = ceil(await order_srvc.repository.get_order_count() / filter.page_limit)
+    tasks = await task_srvc.get_all(params=filter, response_model=TasksTable)
+    pages_count = ceil(await task_srvc.repository.get_task_count() / filter.page_limit)
     return templates.TemplateResponse(
         'pages/tasks/index.html',
         context=dict(
             request=request,
-            orders=[row.model_dump() for row in orders],
+            tasks=[row.model_dump() for row in tasks],
             filter=filter,
             pages_count=pages_count,
         )
     )
 
 
-@r.post('/order')
-async def post_order(
-    order_srvc: ServiceDepends,
+@r.post('/tasks')
+async def post_task(
+    task_srvc: ServiceDepends,
     body: Annotated[dict, Depends(converted_qs)],
 ):
-    new_order_id = await order_srvc.add_one(BaseTask.model_validate(body))
-    return Response(headers={'HX-Redirect': f'/order/edit/{new_order_id}'})
+    new_task_id = await task_srvc.add_one(BaseTask.model_validate(body))
+    return Response(headers={'HX-Redirect': f'/tasks/edit/{new_task_id}'})

@@ -19,40 +19,40 @@ ServiceDepends = Annotated[BaseService, Depends(service_depends)]
 
 
 @r.post(BASE)
-async def add_order(
-    order: BaseTask,
-    order_srvc: ServiceDepends
+async def add_task(
+    task: BaseTask,
+    task_srvc: ServiceDepends
 ) -> int | None:
-    return await order_srvc.add_one(order)
+    return await task_srvc.add_one(task)
 
 
 @r.get(BASE)
-async def get_orders(
-    order_srvc: ServiceDepends
+async def get_tasks(
+    task_srvc: ServiceDepends
 ) -> list[TaskSchema]:
-    return await order_srvc.get_all(response_model=TaskSchema)
+    return await task_srvc.get_all(response_model=TaskSchema)
 
 
 @r.get(BASE + '/{id}')
-async def get_order(
+async def get_task(
     id: int,
-    order_srvc: ServiceDepends
+    task_srvc: ServiceDepends
 ) -> TaskSchema | None:
-    return await order_srvc.get_one(id, response_model=TaskSchema)
+    return await task_srvc.get_one(id, response_model=TaskSchema)
 
 
 @r.put(BASE + '/{id}')
-async def update_order(
+async def update_task(
     id: int,
-    upd_order: UpdTask,
-    order_srvc: ServiceDepends
+    upd_task: UpdTask,
+    task_srvc: ServiceDepends
 ) -> int | None:
-    return await order_srvc.update_one(id, upd_order)
+    return await task_srvc.update_one(id, upd_task)
 
 
 @r.delete(BASE + '/{id}')
-async def delete_order(
+async def delete_task(
     id: int,
-    order_srvc: ServiceDepends
+    task_srvc: ServiceDepends
 ) -> int:
-    return await order_srvc.del_one(id)
+    return await task_srvc.del_one(id)
