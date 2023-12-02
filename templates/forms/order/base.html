@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block content %}
+
+
+<form
+  id="customer"
+  hx-post="/customer"
+  hx-vals='{"context": "select_form"}'
+  hx-target="#customer_select_form"
+></form>
+
+<div class="flex justify-center ">
+  <div class="w-full md:w-3/4">
+    <form class="flex flex-col justify-center">
+      <div class="flex flex-wrap w-full bg-white justify-between">
+        {% block customer %}{% endblock %}
+
+        {% block order %}{% endblock %}
+      </div>
+
+    {% block order_details %}{% endblock %}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

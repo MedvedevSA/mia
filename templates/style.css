@@ -12,7 +12,7 @@ input {
   border: none;
   outline: none;
 }
-.bg-pattern{
+/* .bg-pattern{
     background: linear-gradient(
         rgba(255,255,255, 0) .9em, rgb(249,44,133, 0.2) 1em)
       0 0,
@@ -21,7 +21,7 @@ input {
       0 0;
     background-size: 1em 1em;
     background-color: #FDF5DF;
-}
+} */
 
 @layer components {
     .input {

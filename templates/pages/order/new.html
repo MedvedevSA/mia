@@ -19,7 +19,7 @@
       </div>
 
       <div
-        class="my-2 w-full bg-slate-100 rounded-md border-2 border-slate-100"
+        class="my-2 w-full bg-slate-100 rounded-md border-2 border-slate-100 flex flex-col justify-center"
         x-data="addOrderItems"
       >
         <div class="p-2 flex">
@@ -31,12 +31,12 @@
             <i class="fa-solid fa-add"></i>
           </p>
         </div>
+
         <template x-for="(item, idx) in orderItems">
           <div
-            class="p-2 bg-white border-spacing-3 border-2 border-slate-300 rounded-sm flex flex-wrap w-full md:w-3/4"
+            class="p-2 bg-white border-spacing-3 border-2 border-slate-300 rounded-sm w-full md:w-3/4"
           >
             <div class="w-full">
-
               <div class="flex justify-between mb-4">
                 <p 
                   x-text="'📌 ' + (idx+1)"
